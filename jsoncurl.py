@@ -37,12 +37,21 @@ class jsonprint(object):
     def __init__(self):
         pass
 
-    def prints(self, json, element=None):
+    def uprint(self, json_data, element=None):
         if element == None:
-            print(json)
+            print(json_data)
         else:
             try:
-                print(json[element])
+                print(json_data[element])
+            except KeyError:
+                print("element <%s> not found in json" % element)
+
+    def pprint(self, json_data, element=None):
+        if element == None:
+            print( json.dumps(json_data, sort_keys=True, indent=4) )
+        else:
+            try:
+                print( json.dumps(json_data[element], sort_keys=True, indent=4) )
             except KeyError:
                 print("element <%s> not found in json" % element)
 
@@ -59,9 +68,10 @@ jc = jsoncurl()
 jp = jsonprint()
 
 
+
 json_data = jc.get_jsonparsed_data( args['URL'] )
 if args['extract_element']:
-    jp.prints(json_data, args['extract_element'] )
+    jp.pprint(json_data, args['extract_element'] )
 else:
-    jp.prints(json_data)
+    jp.pprint(json_data)
 
