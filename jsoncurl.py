@@ -27,7 +27,9 @@ class jsoncurl(object):
         """
 
         response = urlopen(url)
-        data = str(response.read())
+        data = response.read().decode()
+        #return data
+        #return json.dumps(data)
         return json.loads(data)
 
 class jsonprint(object):
